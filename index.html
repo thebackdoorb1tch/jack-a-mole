@@ -44,13 +44,20 @@
             padding: 10px;
             font-size: 20px;
         }
+        #win-message {
+            display: none;
+            font-size: 24px;
+            color: green;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Jack-a-Mole Game <span id="version">v1.6</span></h1>
+    <h1>Jack-a-Mole Game <span id="version">v1.7</span></h1>
     <p>Click on Jack to earn points!</p>
     <div class="score">Score: <span id="score">0</span></div>
+    <div id="win-message">You win! 🎉</div>
 
     <div class="game-container">
         <div class="square" id="square1"></div>
@@ -64,52 +71,74 @@
     <!-- Updated image link -->
     <img src="https://i.imgur.com/KV1HKBC.jpeg" id="jackImage" style="display: none;">
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <script>
         let score = 0;
         let activeSquare = null;
+        let timeout = null;
 
-        // Get the score element
         const scoreElement = document.getElementById('score');
-        
-        // Get all the square elements
+        const winMessage = document.getElementById('win-message');
         const squares = document.querySelectorAll('.square');
-        
-        // Get the Jack image element
         const jackImage = document.getElementById('jackImage');
 
-        // Function to hide all Jacks
         function hideAllJacks() {
             squares.forEach(square => {
                 square.innerHTML = ''; // Clear the square content (remove the image)
             });
         }
 
-        // Function to randomly display Jack in one of the squares
         function showRandomJack() {
-            hideAllJacks(); // Hide any existing Jack
-            const randomIndex = Math.floor(Math.random() * squares.length); // Choose a random square index
+            hideAllJacks();
+            const randomIndex = Math.floor(Math.random() * squares.length);
             const randomSquare = squares[randomIndex];
-            randomSquare.appendChild(jackImage); // Add Jack image to the random square
-            jackImage.style.display = 'block'; // Show Jack image in the chosen square
-            activeSquare = randomSquare; // Set active square
+            randomSquare.appendChild(jackImage);
+            jackImage.style.display = 'block';
+            activeSquare = randomSquare;
+
+            // Set a timeout to deduct a point if the player doesn't click in time
+            timeout = setTimeout(() => {
+                if (activeSquare) {
+                    score--; // Deduct a point for not clicking in time
+                    scoreElement.textContent = score;
+                    hideAllJacks(); // Remove Jack from the square
+                }
+            }, 1000); // 1 second to click
         }
 
-        // Function to handle a square click
         function handleSquareClick(event) {
+            clearTimeout(timeout); // Clear the timeout if the player clicks in time
             if (event.currentTarget === activeSquare) {
                 score++; // Increase score
-                scoreElement.textContent = score; // Update score display
+                scoreElement.textContent = score;
             }
-            showRandomJack(); // Show Jack in a new square after click
+            hideAllJacks();
+            if (score >= 10) {
+                winGame(); // Call win function when score reaches 10
+            } else {
+                showRandomJack();
+            }
         }
 
-        // Add click event listeners to all squares
+        function winGame() {
+            winMessage.style.display = 'block'; // Display win message
+            confetti(); // Show confetti
+            setTimeout(resetGame, 3000); // Reset game after 3 seconds
+        }
+
+        function resetGame() {
+            score = 0;
+            scoreElement.textContent = score;
+            winMessage.style.display = 'none'; // Hide win message
+            showRandomJack(); // Restart the game with a new random Jack
+        }
+
         squares.forEach(square => {
             square.addEventListener('click', handleSquareClick);
         });
 
-        // Start the game by showing Jack at random intervals
-        setInterval(showRandomJack, 1000); // Show Jack every second
+        setInterval(showRandomJack, 2000); // Show Jack every 2 seconds
     </script>
 
 </body>
