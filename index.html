@@ -100,9 +100,7 @@
             // Set a timeout to deduct a point if the player doesn't click in time
             timeout = setTimeout(() => {
                 if (activeSquare) {
-                    score--; // Deduct a point for not clicking in time
-                    scoreElement.textContent = score;
-                    hideAllJacks(); // Remove Jack from the square
+                    hideAllJacks(); // Remove Jack from the square if time is up
                 }
             }, 1000); // 1 second to click
         }
@@ -110,12 +108,11 @@
         function handleSquareClick(event) {
             if (event.currentTarget === activeSquare) {
                 score++; // Increase score
-                scoreElement.textContent = score;
-            } else {
+            } else if (!event.currentTarget.contains(jackImage)) {
                 score--; // Deduct a point for clicking an empty square
-                scoreElement.textContent = score;
             }
-            
+            scoreElement.textContent = score;
+
             hideAllJacks();
             if (score >= 10) {
                 winGame(); // Call win function when score reaches 10
