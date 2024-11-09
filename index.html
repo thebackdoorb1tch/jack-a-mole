@@ -34,10 +34,10 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 90%; /* Smaller size to avoid stretching */
-            height: 90%; /* Matches width for non-stretched scaling */
+            width: 100%; /* Full width of the square */
+            height: 100%; /* Full height of the square */
+            object-fit: cover; /* Ensures the image covers the square without distortion */
             display: none;
-            margin: auto;
         }
         .score {
             margin: 0;
@@ -62,7 +62,7 @@
     </div>
 
     <!-- Updated image link -->
-    <img src="https://i.imgur.com/KV1HKBC.jpeg/150" id="jackImage" style="display: none;">
+    <img src="https://i.imgur.com/KV1HKBC.jpeg" id="jackImage" style="display: none;">
 
     <script>
         let score = 0;
