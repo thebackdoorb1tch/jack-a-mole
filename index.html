@@ -14,15 +14,17 @@
         }
         .game-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(25%, 1fr)); /* Adapts for mobile screens */
-            grid-gap: 5px;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns for smaller squares */
+            grid-gap: 10px;
             margin: 0 auto;
             padding: 10px;
-            height: 75vh; /* Scales grid to fit screen height */
+            width: 100vw;  /* Width of screen for consistent scaling */
+            max-width: 500px;
+            height: 70vh; /* Height fits within the screen for mobile */
         }
         .square {
             width: 100%;
-            padding-top: 100%; /* 1:1 Aspect Ratio */
+            padding-top: 100%; /* Maintain a 1:1 aspect ratio */
             background-color: #f4f4f4;
             border: 2px solid #ccc;
             position: relative;
@@ -32,9 +34,10 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 90%; /* Smaller size to avoid stretching */
+            height: 90%; /* Matches width for non-stretched scaling */
             display: none;
+            margin: auto;
         }
         .score {
             margin: 0;
@@ -45,7 +48,7 @@
 </head>
 <body>
 
-    <h1>Jack-a-Mole Game <span id="version">v1.4</span></h1>
+    <h1>Jack-a-Mole Game <span id="version">v1.5</span></h1>
     <p>Click on Jack to earn points!</p>
     <div class="score">Score: <span id="score">0</span></div>
 
@@ -58,7 +61,7 @@
         <div class="square" id="square6"></div>
     </div>
 
-    <!-- Image link updated to 150x150 size -->
+    <!-- Updated image link -->
     <img src="https://i.imgur.com/KV1HKBC.jpeg/150" id="jackImage" style="display: none;">
 
     <script>
@@ -111,4 +114,3 @@
 
 </body>
 </html>
-
