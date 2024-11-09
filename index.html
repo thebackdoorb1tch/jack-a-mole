@@ -54,7 +54,7 @@
 </head>
 <body>
 
-    <h1>Jack-a-Mole Game <span id="version">v1.9</span></h1>
+    <h1>Jack-a-Mole Game <span id="version">v2.0</span></h1>
     <p>Click on Jack to earn points!</p>
     <div class="score">Score: <span id="score">0</span></div>
     <div id="win-message">You win! 🎉</div>
@@ -102,7 +102,7 @@
                 if (activeSquare) {
                     hideAllJacks(); // Remove Jack from the square if time is up
                 }
-            }, 1000); // 1 second to click
+            }, 1200); // Slowed down from 1000ms to 1200ms (0.2 second delay)
         }
 
         function handleSquareClick(event) {
@@ -138,7 +138,7 @@
             square.addEventListener('click', handleSquareClick);
         });
 
-        setInterval(showRandomJack, 2000); // Show Jack every 2 seconds
+        setInterval(showRandomJack, 2500); // Slowed down from 2000ms to 2500ms (0.5 second delay)
     </script>
 
 </body>
