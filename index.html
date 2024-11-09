@@ -10,15 +10,15 @@
             text-align: center;
             margin: 0;
             padding: 0;
+            overflow: hidden; /* Prevents scrolling */
         }
         .game-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            grid-gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(25%, 1fr)); /* Adapts for mobile screens */
+            grid-gap: 5px;
             margin: 0 auto;
-            width: 90vw;
-            padding: 20px;
-            max-width: 500px; /* Max width for larger screens */
+            padding: 10px;
+            height: 75vh; /* Scales grid to fit screen height */
         }
         .square {
             width: 100%;
@@ -37,14 +37,15 @@
             display: none;
         }
         .score {
-            margin-top: 20px;
-            font-size: 24px;
+            margin: 0;
+            padding: 10px;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Jack-a-Mole Game <span id="version"></span></h1>
+    <h1>Jack-a-Mole Game <span id="version">v1.4</span></h1>
     <p>Click on Jack to earn points!</p>
     <div class="score">Score: <span id="score">0</span></div>
 
@@ -63,10 +64,6 @@
     <script>
         let score = 0;
         let activeSquare = null;
-        let version = 1.3; // Updated version number
-
-        // Display version at the top
-        document.getElementById('version').textContent = "v" + version.toFixed(1);
 
         // Get the score element
         const scoreElement = document.getElementById('score');
@@ -110,7 +107,8 @@
 
         // Start the game by showing Jack at random intervals
         setInterval(showRandomJack, 1000); // Show Jack every second
-    </script> 
+    </script>
 
 </body>
 </html>
+
