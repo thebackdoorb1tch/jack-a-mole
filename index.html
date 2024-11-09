@@ -54,7 +54,7 @@
 </head>
 <body>
 
-    <h1>Jack-a-Mole Game <span id="version">v1.8</span></h1>
+    <h1>Jack-a-Mole Game <span id="version">v1.9</span></h1>
     <p>Click on Jack to earn points!</p>
     <div class="score">Score: <span id="score">0</span></div>
     <div id="win-message">You win! 🎉</div>
@@ -108,11 +108,14 @@
         }
 
         function handleSquareClick(event) {
-            clearTimeout(timeout); // Clear the timeout if the player clicks in time
             if (event.currentTarget === activeSquare) {
                 score++; // Increase score
                 scoreElement.textContent = score;
+            } else {
+                score--; // Deduct a point for clicking an empty square
+                scoreElement.textContent = score;
             }
+            
             hideAllJacks();
             if (score >= 10) {
                 winGame(); // Call win function when score reaches 10
