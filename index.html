@@ -38,7 +38,7 @@
 </head>
 <body>
 
-    <h1>Jack-a-Mole Game</h1>
+    <h1>Jack-a-Mole Game <span id="version"></span></h1>
     <p>Click on Jack to earn points!</p>
     <div class="score">Score: <span id="score">0</span></div>
 
@@ -51,11 +51,15 @@
         <div class="square" id="square6"></div>
     </div>
 
-    <img src="https://i.imgur.com/KV1HKBC.jpeg" id="jackImage" style="display: none;">
+    <img src="https://i.imgur.com/yourimageid.jpg" id="jackImage" style="display: none;">
 
     <script>
         let score = 0;
         let activeSquare = null;
+        let version = 1.0; // Initialize version
+
+        // Display version at the top
+        document.getElementById('version').textContent = "v" + version.toFixed(1);
 
         // Get the score element
         const scoreElement = document.getElementById('score');
