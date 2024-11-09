@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jack-a-Mole Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .game-container {
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            grid-gap: 10px;
+            margin: 0 auto;
+            width: 500px;
+            padding: 20px;
+        }
+        .square {
+            width: 150px;
+            height: 150px;
+            background-color: #f4f4f4;
+            border: 2px solid #ccc;
+            position: relative;
+            cursor: pointer;
+        }
+        .square img {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        .score {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Jack-a-Mole Game</h1>
+    <p>Click on Jack to earn points!</p>
+    <div class="score">Score: <span id="score">0</span></div>
+
+    <div class="game-container">
+        <div class="square" id="square1"></div>
+        <div class="square" id="square2"></div>
+        <div class="square" id="square3"></div>
+        <div class="square" id="square4"></div>
+        <div class="square" id="square5"></div>
+        <div class="square" id="square6"></div>
+    </div>
+
+    <img src="https://imgur.com/a/AzKfMjh" id="jackImage" style="display: none;">
+
+    <script>
+        let score = 0;
+        let activeSquare = null;
+
+        // Get the score element
+        const scoreElement = document.getElementById('score');
+        
+        // Get all the square elements
+        const squares = document.querySelectorAll('.square');
+        
+        // Get the Jack image element
+        const jackImage = document.getElementById('jackImage');
+
+        // Function to hide all Jacks
+        function hideAllJacks() {
+            squares.forEach(square => {
+                square.innerHTML = ''; // Clear the square content (remove the image)
+            });
+        }
+
+        // Function to randomly display Jack in one of the squares
+        function showRandomJack() {
+            hideAllJacks(); // Hide any existing Jack
+            const randomIndex = Math.floor(Math.random() * squares.length); // Choose a random square index
+            const randomSquare = squares[randomIndex];
+            randomSquare.appendChild(jackImage); // Add Jack image to the random square
+            jackImage.style.display = 'block'; // Show Jack image in the chosen square
+            activeSquare = randomSquare; // Set active square
+        }
+
+        // Function to handle a square click
+        function handleSquareClick(event) {
+            if (event.currentTarget === activeSquare) {
+                score++; // Increase score
+                scoreElement.textContent = score; // Update score display
+            }
+            showRandomJack(); // Show Jack in a new square after click
+        }
+
+        // Add click event listeners to all squares
+        squares.forEach(square => {
+            square.addEventListener('click', handleSquareClick);
+        });
+
+        // Start the game by showing Jack at random intervals
+        setInterval(showRandomJack, 1000); // Show Jack every second
+    </script>
+
+</body>
+</html>
